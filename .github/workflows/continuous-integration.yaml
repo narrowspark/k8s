@@ -13,4 +13,4 @@ jobs:
             - uses: "actions/checkout@v1"
             - uses: "stefanprodan/kube-tools@v1"
               with:
-                  command: "kubeval -d istio,flagger,flux --strict --ignore-missing-schemas"
+                  command: "kubeval -d istio,flagger,flux-system,narrowspark --strict --ignore-missing-schemas"

@@ -14,16 +14,17 @@ fi
 
 REPO_GIT_INIT_PATHS="istio"
 REPO_ROOT=$(git rev-parse --show-toplevel)
-REPO_URL=${1:-git@github.com:stefanprodan/gitops-istio}
+REPO_URL=${1:-git@github.com:narrowspark/k8s}
 REPO_BRANCH=main
 TEMP=${REPO_ROOT}/temp
 
 rm -rf ${TEMP} && mkdir ${TEMP}
 
 helm repo add fluxcd https://charts.fluxcd.io
+helm repo update
 
 echo ">>> Installing Flux for ${REPO_URL} only watching istio paths"
-kubectl create ns flux || true
+kubectl create ns flux-system || true
 helm upgrade -i flux fluxcd/flux --wait \
 --set git.url=${REPO_URL} \
 --set git.branch=${REPO_BRANCH} \
@@ -32,21 +33,21 @@ helm upgrade -i flux fluxcd/flux --wait \
 --set registry.pollInterval=1m \
 --set sync.state=secret \
 --set syncGarbageCollection.enabled=true \
---namespace flux
+--namespace flux-system
 
 echo ">>> Installing Helm Operator"
 kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/crds.yaml
 helm upgrade -i helm-operator fluxcd/helm-operator --wait \
 --set git.ssh.secretName=flux-git-deploy \
 --set helm.versions=v3 \
---namespace flux
+--namespace flux-system
 
 echo ">>> GitHub deploy key"
-kubectl -n flux logs deployment/flux | grep identity.pub | cut -d '"' -f2
+kubectl -n flux-system logs deployment/flux | grep identity.pub | cut -d '"' -f2
 
 # wait until flux is able to sync with repo
 echo ">>> Waiting on user to add above deploy key to Github with write access"
-until kubectl logs -n flux deployment/flux | grep event=refreshed
+until kubectl logs -n flux-system deployment/flux | grep event=refreshed
 do
   sleep 5
 done
@@ -69,6 +70,6 @@ helm upgrade -i flux fluxcd/flux --wait \
 --set registry.pollInterval=1m \
 --set sync.state=secret \
 --set syncGarbageCollection.enabled=true \
---namespace flux
+--namespace flux-system
 
 echo ">>> Cluster bootstrap done!"

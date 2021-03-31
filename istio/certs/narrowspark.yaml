@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: narrowspark.com-crt
+  namespace: istio-system
+spec:
+  secretName: narrowspark.com-crt-secret
+  dnsNames:
+    - "narrowspark.com"
+    - "k8hooks.narrowspark.com"
+    - "automatic.narrowspark.com"
+    - "grafana.narrowspark.com"
+    - "prometheus.narrowspark.com"
+    - "jaeger.narrowspark.com"
+    - "servicegraph.narrowspark.com"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
