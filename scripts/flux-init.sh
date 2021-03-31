@@ -15,7 +15,7 @@ fi
 REPO_GIT_INIT_PATHS="istio"
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_URL=${1:-git@github.com:stefanprodan/gitops-istio}
-REPO_BRANCH=master
+REPO_BRANCH=main
 TEMP=${REPO_ROOT}/temp
 
 rm -rf ${TEMP} && mkdir ${TEMP}

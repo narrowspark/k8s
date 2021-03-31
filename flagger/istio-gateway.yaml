@@ -12,4 +12,17 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "*"
+        - "narrowspark.com"
+        - "k8hooks.narrowspark.com"
+        - "automatic.narrowspark.com"
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      tls:
+        mode: SIMPLE
+        credentialName: narrowspark.com-crt-mzgqf
+      hosts:
+        - "narrowspark.com"
+        - "k8hooks.narrowspark.com"
+        - "automatic.narrowspark.com"
