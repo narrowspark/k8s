@@ -10,4 +10,4 @@ spec:
         name: cert-manager
         version: v1.2.0
     values:
-        installCRDs: true
+        installCRDs: false
