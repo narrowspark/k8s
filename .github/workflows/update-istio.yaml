@@ -52,8 +52,8 @@ jobs:
               uses: "peter-evans/create-pull-request@v2"
               if: "steps.check.outputs.version"
               with:
-                  commit-message: "Update Istio to ${{ steps.check.outputs.version }}"
-                  title: "Update Istio to ${{ steps.check.outputs.version }}"
+                  commit-message: "feat: update Istio to ${{ steps.check.outputs.version }}"
+                  title: "feat: update Istio to ${{ steps.check.outputs.version }}"
                   body: |
                     Istio operator v${{ steps.check.outputs.version }}
                   branch: "update-istio"
