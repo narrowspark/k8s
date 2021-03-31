@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: istio-telemetry-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 443
+        name: https2
+        protocol: HTTPS
+      hosts:
+        - "grafana.narrowspark.com"
+        - "prometheus.narrowspark.com"
+        - "jaeger.narrowspark.com"
+        - "servicegraph.narrowspark.com"
+      tls:
+        mode: SIMPLE
+        credentialName: narrowspark.com-crt-mzgqf
