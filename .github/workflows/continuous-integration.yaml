@@ -1,0 +1,16 @@
+# https://help.github.com/en/categories/automating-your-workflow-with-github-actions
+
+name: "Continuous Integration"
+
+on: ["push", "pull_request"] # yamllint disable-line rule:truthy
+
+jobs:
+    kubeval:
+
+        runs-on: "ubuntu-latest"
+
+        steps:
+            - uses: "actions/checkout@v1"
+            - uses: "stefanprodan/kube-tools@v1"
+              with:
+                  command: "kubeval -d istio,flagger,flux --strict --ignore-missing-schemas"

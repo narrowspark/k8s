@@ -9,5 +9,5 @@ rm -rf ./linux-amd64
 chmod +x $GITHUB_WORKSPACE/bin/helm
 ls -lh $GITHUB_WORKSPACE/bin
 
-echo "::add-path::$GITHUB_WORKSPACE/bin"
-echo "::add-path::$RUNNER_WORKSPACE/$(basename $GITHUB_REPOSITORY)/bin"
+echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
+echo "$RUNNER_WORKSPACE/$(basename $GITHUB_REPOSITORY)/bin" >> $GITHUB_PATH
