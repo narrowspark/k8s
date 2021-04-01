@@ -7,7 +7,7 @@ spec:
   releaseName: "grafana"
   chart:
     repository: "https://grafana.github.io/helm-charts"
-    name: "grafana"
+    name: "grafana/grafana"
     version: "6.7.1"
   values:
     datasources:
