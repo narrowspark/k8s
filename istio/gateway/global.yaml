@@ -8,14 +8,14 @@ spec:
     istio: "ingressgateway"
   servers:
     - port:
-        number: "80"
+        number: 80
         name: "http"
         protocol: "HTTP"
       hosts:
         - "narrowspark.com"
         - "automatic.narrowspark.com"
     - port:
-        number: "443"
+        number: 443
         name: "https"
         protocol: "HTTPS"
       tls:
