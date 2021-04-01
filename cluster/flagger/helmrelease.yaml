@@ -16,5 +16,7 @@ spec:
         namespace: istio-system
       interval: 5m
   values:
+    crd:
+      create: false
     meshProvider: istio
     metricsServer: http://prometheus.istio-system:9090
