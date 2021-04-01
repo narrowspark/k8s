@@ -1,11 +1,11 @@
-apiVersion: "helm.fluxcd.io/v1"
-kind: "HelmRelease"
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
 metadata:
-  name: "helm-exporter"
-  namespace: "flux-system"
+  name: helm-exporter
+  namespace: flux-system
 spec:
-  releaseName: "helm-exporter"
+  releaseName: helm-exporter
   chart:
-    repository: "https://shanestarcher.com/helm-charts/"
-    name: "helm-exporter"
-    version: "0.6.2+5cbe2aa"
+    repository: https://shanestarcher.com/helm-charts/
+    name: helm-exporter
+    version: 0.6.2+5cbe2aa

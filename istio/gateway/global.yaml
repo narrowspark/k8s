@@ -1,26 +1,26 @@
-apiVersion: "networking.istio.io/v1alpha3"
-kind: "Gateway"
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
 metadata:
-  name: "global-gateway"
-  namespace: "istio-system"
+  name: global-gateway
+  namespace: istio-system
 spec:
   selector:
-    istio: "ingressgateway"
+    istio: ingressgateway
   servers:
     - port:
         number: 80
-        name: "http"
-        protocol: "HTTP"
+        name: http
+        protocol: HTTP
       hosts:
-        - "narrowspark.com"
-        - "automatic.narrowspark.com"
+        - narrowspark.com
+        - automatic.narrowspark.com
     - port:
         number: 443
-        name: "https"
-        protocol: "HTTPS"
+        name: https
+        protocol: HTTPS
       tls:
-        mode: "SIMPLE"
-        credentialName: "narrowspark.com-crt-mzgqf"
+        mode: SIMPLE
+        credentialName: narrowspark.com-crt-mzgqf
       hosts:
-        - "narrowspark.com"
-        - "automatic.narrowspark.com"
+        - narrowspark.com
+        - automatic.narrowspark.com

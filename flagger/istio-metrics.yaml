@@ -1,12 +1,12 @@
-apiVersion: "flagger.app/v1beta1"
-kind: "MetricTemplate"
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
 metadata:
-  name: "error-rate"
-  namespace: "istio-system"
+  name: error-rate
+  namespace: istio-system
 spec:
   provider:
-    type: "prometheus"
-    address: "http://prometheus.istio-system:9090"
+    type: prometheus
+    address: http://prometheus.istio-system:9090
   query: |
     100 - sum(
       rate(
@@ -30,15 +30,15 @@ spec:
     )
     * 100
 ---
-apiVersion: "flagger.app/v1beta1"
-kind: "MetricTemplate"
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
 metadata:
-  name: "latency"
-  namespace: "istio-system"
+  name: latency
+  namespace: istio-system
 spec:
   provider:
-    type: "prometheus"
-    address: "http://prometheus.istio-system:9090"
+    type: prometheus
+    address: http://prometheus.istio-system:9090
   query: |
     histogram_quantile(
       0.99,
