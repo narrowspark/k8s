@@ -1,13 +1,13 @@
 apiVersion: "helm.fluxcd.io/v1"
 kind: "HelmRelease"
 metadata:
-    name: "grafana/grafana"
+    name: "grafana"
     namespace: "istio-system"
 spec:
     releaseName: "grafana"
     chart:
         repository: "https://grafana.github.io/helm-charts"
-        name: "grafana/grafana"
+        name: "grafana"
         version: "6.7.1"
     values:
         datasources:
