@@ -1,0 +1,45 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: istio-ingress-certs
+  namespace: istio-system
+spec:
+  secretName: istio-ingress-certs
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  commonName: www.narrowspark.com
+  dnsNames:
+    - www.narrowspark.com
+    - narrowspark.com
+    - automatic.narrowspark.com
+    - grafana.narrowspark.com
+  acme:
+    config:
+      - http01:
+          ingressClass: none
+        domains:
+          - www.narrowspark.com
+          - narrowspark.com
+          - automatic.narrowspark.com
+          - grafana.narrowspark.com
+
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: istio-ca
+spec:
+  isCA: true
+  duration: 2160h # 90d
+  secretName: istio-ca
+  commonName: istio-ca
+  subject:
+    organizations:
+      - cluster.local
+      - cert-manager
+  issuerRef:
+    name: selfsigned
+    kind: Issuer
+    group: cert-manager.io

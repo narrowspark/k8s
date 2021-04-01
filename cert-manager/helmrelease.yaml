@@ -19,3 +19,27 @@ spec:
       interval: 5m
   values:
     installCRDs: true
+
+---
+
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cert-manager-istio-csr
+  namespace: cert-manager
+  annotations:
+    fluxcd.io/automated: "true"
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.jetstack.io
+      chart: cert-manager
+      version: 1.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: jetstack
+        namespace: cert-manager-istio-csr
+      interval: 5m
+  values:
+    installCRDs: true

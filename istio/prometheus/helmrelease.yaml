@@ -2,7 +2,9 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: prometheus
-  namespace: istio-system
+  namespace: prometheus-operator
+  annotations:
+    flux.weave.works/automated: "true"
 spec:
   interval: 5m
   chart:
