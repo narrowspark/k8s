@@ -1,4 +1,4 @@
-apiVersion: apiextensions.k8s.io/v1beta1
+apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: canaries.flagger.app
@@ -745,7 +745,7 @@ spec:
                     description: Type of this condition
                     type: string
 ---
-apiVersion: apiextensions.k8s.io/v1beta1
+apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: metrictemplates.flagger.app
@@ -815,7 +815,7 @@ spec:
               description: Query of this metric template
               type: string
 ---
-apiVersion: apiextensions.k8s.io/v1beta1
+apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: alertproviders.flagger.app
