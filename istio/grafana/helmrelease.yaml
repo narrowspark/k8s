@@ -45,22 +45,6 @@ spec:
             path: /var/lib/grafana/dashboards/istio-services
           orgId: 1
           type: file
-    extraVolumeMounts:
-      - name: config
-        mountPath: /etc/grafana/grafana.ini
-        subPath: grafana.ini
-      - name: storage
-        mountPath: /var/lib/grafana
-      - name: dashboards-istio
-        mountPath: /var/lib/grafana/dashboards/istio
-      - name: dashboards-istio-services
-        mountPath: /var/lib/grafana/dashboards/istio-services
-      - name: config
-        mountPath: /etc/grafana/provisioning/datasources/datasources.yaml
-        subPath: datasources.yaml
-      - name: config
-        mountPath: /etc/grafana/provisioning/dashboards/dashboardproviders.yaml
-        subPath: dashboardproviders.yaml
     extraContainerVolumes:
       - name: config
         configMap:
