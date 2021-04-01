@@ -13,4 +13,4 @@ jobs:
       - uses: "actions/checkout@v1"
       - uses: "stefanprodan/kube-tools@v1"
         with:
-          command: "kubeval -d cert-manager,flagger,flux-system,istio,narrowspark --strict --ignore-missing-schemas"
+          command: "kubeval -d cluster/cert-manager,cluster/flagger,cluster/flux-system,cluster/istio,cluster/narrowspark --strict --ignore-missing-schemas"

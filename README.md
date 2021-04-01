@@ -21,16 +21,32 @@ Components:
 
 ### Prerequisites
 
-You'll need a Kubernetes cluster **v1.11** or newer with `LoadBalancer` support.
-For testing purposes you can use Minikube with four CPUs and 4GB of memory.
+You will need a Kubernetes cluster version 1.16 or newer and kubectl version 1.18.
+For a quick local test, you can use [Kubernetes kind](https://kind.sigs.k8s.io/docs/user/quick-start/).
+Any other Kubernetes setup will work as well though.
+
+In order to follow the guide you'll need a GitHub account and a
+[personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+that can create repositories (check all permissions under `repo`).
 
 Install [Flux CLI](https://toolkit.fluxcd.io/get-started/#install-the-flux-cli) and [Helm v3](https://helm.sh/docs/intro/install/):
 
 ```bash
 export GITHUB_TOKEN=<your-token>
 export GITHUB_USER=<your-username>
+```
 
+```sh
+brew install fluxcd/tap/flux
+```
+
+Or install the CLI by downloading precompiled binaries using a Bash script:
+
+```sh
 curl -s https://toolkit.fluxcd.io/install.sh | sudo bash
+```
+
+```bash
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 ```
 
@@ -46,7 +62,14 @@ cd k8s
 Install Flux and its Helm Operator by specifying your fork URL:
 
 ```bash
-./scripts/flux-init.sh git@github.com:narrowspark/k8s
+flux bootstrap github \
+  --owner=narrowspark \
+  --repository=k8s \
+  --branch=main \
+  --path=./cluster \
+  --components=source-controller,kustomize-controller,helm-controller,notification-controller \
+  --personal \
+  --private
 ```
 
 At startup, Flux generates a SSH key and logs the public key. The above command will print the public key.
