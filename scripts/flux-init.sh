@@ -33,6 +33,9 @@ helm upgrade -i flux fluxcd/flux --wait \
 --set registry.pollInterval=1m \
 --set sync.state=secret \
 --set syncGarbageCollection.enabled=true \
+--set dashboards.enabled=true \
+--set dashboards.namespace=istio-system \
+--set prometheus.enabled=true
 --namespace flux-system
 
 echo ">>> Installing Helm Operator"
