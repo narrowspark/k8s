@@ -3,57 +3,57 @@
 name: "Update istio"
 
 on: # yamllint disable-line rule:truthy
-    schedule:
-        - cron: "0 8 */1 * *"
-    push:
-        branches:
-            - "main"
+  schedule:
+    - cron: "0 8 */1 * *"
+  push:
+    branches:
+      - "main"
 
 jobs:
-    check-istio:
+  check-istio:
 
-        runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-latest"
 
-        steps:
-            - name: "Git checkout"
-              uses: "actions/checkout@v2"
-              with:
-                  fetch-depth: 2
-              env:
-                  GIT_COMMITTER_NAME: "GitHub Actions Shell"
-                  GIT_AUTHOR_NAME: "GitHub Actions Shell"
-                  EMAIL: "github-actions[bot]@users.noreply.github.com"
+    steps:
+      - name: "Git checkout"
+        uses: "actions/checkout@v2"
+        with:
+          fetch-depth: 2
+        env:
+          GIT_COMMITTER_NAME: "GitHub Actions Shell"
+          GIT_AUTHOR_NAME: "GitHub Actions Shell"
+          EMAIL: "github-actions[bot]@users.noreply.github.com"
 
-            - name: "Setup Helm"
-              uses: "./.github/actions/helm"
+      - name: "Setup Helm"
+        uses: "./.github/actions/helm"
 
-            - name: "Check for updates"
-              id: "check"
-              run: |
-                  curl -sL https://istio.io/downloadIstio | sh -
-                  ISTIO_DIR=$(find . -name 'istio-*' -type d -maxdepth 1 -print | head -n1)
-                  ISTIO_VER=${ISTIO_DIR##./istio-}
+      - name: "Check for updates"
+        id: "check"
+        run: |
+          curl -sL https://istio.io/downloadIstio | sh -
+          ISTIO_DIR=$(find . -name 'istio-*' -type d -maxdepth 1 -print | head -n1)
+          ISTIO_VER=${ISTIO_DIR##./istio-}
 
-                  echo "Build manifests for ${ISTIO_VER} in dir ${ISTIO_DIR}"
-                  helm template ${ISTIO_DIR}/manifests/charts/istio-operator/ \
-                  --set hub=docker.io/istio \
-                  --set tag=${ISTIO_VER} \
-                  --set enableCRDTemplates=true \
-                  --set operatorNamespace=istio-operator \
-                  --set istioNamespace=istio-system  > ./istio/operator/manifests.yaml
+          echo "Build manifests for ${ISTIO_VER} in dir ${ISTIO_DIR}"
+          helm template ${ISTIO_DIR}/manifests/charts/istio-operator/ \
+          --set hub=docker.io/istio \
+          --set tag=${ISTIO_VER} \
+          --set enableCRDTemplates=true \
+          --set operatorNamespace=istio-operator \
+          --set istioNamespace=istio-system  > ./istio/operator/manifests.yaml
 
-                  rm -rf ${ISTIO_DIR}
+          rm -rf ${ISTIO_DIR}
 
-                  if [[ $(git diff --stat) != '' ]]; then
-                    echo ::set-output name=version::${ISTIO_VER}
-                  fi
+          if [[ $(git diff --stat) != '' ]]; then
+          echo ::set-output name=version::${ISTIO_VER}
+          fi
 
-            - name: "Create Pull Request"
-              uses: "peter-evans/create-pull-request@v2"
-              if: "steps.check.outputs.version"
-              with:
-                  commit-message: "feat: update Istio to ${{ steps.check.outputs.version }}"
-                  title: "feat: update Istio to ${{ steps.check.outputs.version }}"
-                  body: |
-                    Istio operator v${{ steps.check.outputs.version }}
-                  branch: "update-istio"
+      - name: "Create Pull Request"
+        uses: "peter-evans/create-pull-request@v2"
+        if: "steps.check.outputs.version"
+        with:
+          commit-message: "feat: update Istio to ${{ steps.check.outputs.version }}"
+          title: "feat: update Istio to ${{ steps.check.outputs.version }}"
+          body: |
+            Istio operator v${{ steps.check.outputs.version }}
+          branch: "update-istio"

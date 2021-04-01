@@ -5,12 +5,12 @@ name: "Continuous Integration"
 on: ["push", "pull_request"] # yamllint disable-line rule:truthy
 
 jobs:
-    kubeval:
+  kubeval:
 
-        runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-latest"
 
-        steps:
-            - uses: "actions/checkout@v1"
-            - uses: "stefanprodan/kube-tools@v1"
-              with:
-                  command: "kubeval -d cert-manager,flagger,flux-system,istio,narrowspark --strict --ignore-missing-schemas"
+    steps:
+      - uses: "actions/checkout@v1"
+      - uses: "stefanprodan/kube-tools@v1"
+        with:
+          command: "kubeval -d cert-manager,flagger,flux-system,istio,narrowspark --strict --ignore-missing-schemas"
