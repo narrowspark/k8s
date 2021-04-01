@@ -28,10 +28,10 @@
 #
 #---
 
-apiVersion: cert-manager.io/v1
-kind: Issuer
-metadata:
-  name: istio-ca
-spec:
-  ca:
-    secretName: istio-ca
+#apiVersion: cert-manager.io/v1
+#kind: Issuer
+#metadata:
+#  name: istio-ca
+#spec:
+#  ca:
+#    secretName: istio-ca
