@@ -45,15 +45,10 @@ spec:
             path: /var/lib/grafana/dashboards/istio-services
           orgId: 1
           type: file
-    extraContainerVolumes:
+    extraConfigmapMounts:
       - name: config
-        configMap:
-          name: grafana
+        configMap: grafana
       - name: dashboards-istio
-        configMap:
-          name: istio-grafana-dashboards
+        configMap: istio-grafana-dashboards
       - name: dashboards-istio-services
-        configMap:
-          name: istio-services-grafana-dashboards
-      - name: storage
-        emptyDir: { } # yamllint disable-line rule:braces
+        configMap: istio-services-grafana-dashboards
