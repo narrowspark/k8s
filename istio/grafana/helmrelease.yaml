@@ -1,0 +1,70 @@
+apiVersion: "helm.fluxcd.io/v1"
+kind: "HelmRelease"
+metadata:
+    name: "grafana/grafana"
+    namespace: "istio-system"
+spec:
+    releaseName: "grafana"
+    chart:
+        repository: "https://grafana.github.io/helm-charts"
+        name: "grafana/grafana"
+        version: "6.7.1"
+    values:
+        datasources:
+            apiVersion: "1"
+            datasources:
+                  - access: "proxy"
+                    editable: true
+                    isDefault: true
+                    jsonData:
+                        timeInterval: "5s"
+                    name: "Prometheus"
+                    orgId: 1
+                    type: "prometheus"
+                    url: "http://prometheus:9090"
+        dashboardproviders:
+            apiVersion: 1
+            providers:
+                - disableDeletion: false
+                  folder: "istio"
+                  name: "istio"
+                  options:
+                      path: "/var/lib/grafana/dashboards/istio"
+                  orgId: 1
+                  type: "file"
+                - disableDeletion: false
+                  folder: "istio"
+                  name: "istio-services"
+                  options:
+                      path: "/var/lib/grafana/dashboards/istio-services"
+                  orgId: 1
+                  type: "file"
+        extraVolumeMounts:
+            - name: "config"
+              mountPath: "/etc/grafana/grafana.ini"
+              subPath: "grafana.ini"
+            - name: "storage"
+              mountPath: "/var/lib/grafana"
+            - me: "dashboards-istio"
+              mountPath: "/var/lib/grafana/dashboards/istio"
+            - me: "dashboards-istio-services"
+              mountPath: "/var/lib/grafana/dashboards/istio-services"
+            - me: "config"
+              mountPath: "/etc/grafana/provisioning/datasources/datasources.yaml"
+              subPath: "datasources.yaml"
+            - name: "config"
+              mountPath: "/etc/grafana/provisioning/dashboards/dashboardproviders.yaml"
+              subPath: "dashboardproviders.yaml"
+        extraContainerVolumes:
+            - name: "config"
+              configMap:
+                  name: "grafana"
+            - name: "dashboards-istio"
+              configMap:
+                  name: "istio-grafana-dashboards"
+            - name: "dashboards-istio-services"
+              configMap:
+                  name: "istio-services-grafana-dashboards"
+            - name: "storage"
+              emptyDir: { }
+
