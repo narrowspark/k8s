@@ -4,7 +4,7 @@ metadata:
   name: grafana
   namespace: istio-system
 spec:
-  interval: 5m
+  interval: 1m
   chart:
     spec:
       # renovate: registryUrl=https://grafana.github.io/helm-charts
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: grafana-charts
         namespace: istio-system
-      interval: 5m
+      interval: 1m
   values:
     datasources:
       apiVersion: 1
