@@ -1,14 +1,20 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: grafana
   namespace: istio-system
 spec:
-  releaseName: grafana
+  interval: 5m
   chart:
-    repository: https://grafana.github.io/helm-charts
-    name: grafana
-    version: 6.7.0
+    spec:
+      # renovate: registryUrl=https://grafana.github.io/helm-charts
+      chart: grafana
+      version: 6.7.1
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+        namespace: istio-system
+      interval: 5m
   values:
     datasources:
       apiVersion: 1

@@ -1,11 +1,19 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: helm-exporter
   namespace: flux-system
+  annotations:
+    fluxcd.io/automated: "true"
 spec:
-  releaseName: helm-exporter
+  interval: 5m
   chart:
-    repository: https://shanestarcher.com/helm-charts/
-    name: helm-exporter
-    version: 0.6.2+5cbe2aa
+    spec:
+      # renovate: registryUrl=https://shanestarcher.com/helm-charts/
+      chart: helm-exporter
+      version: 0.6.2+5cbe2aa
+      sourceRef:
+        kind: HelmRepository
+        name: shanestarcher
+        namespace: flux-system
+      interval: 5m
