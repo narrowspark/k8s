@@ -3,11 +3,13 @@ kind: HelmRelease
 metadata:
   name: cert-manager
   namespace: cert-manager
+  annotations:
+    fluxcd.io/automated: "true"
 spec:
   releaseName: cert-manager
   chart:
     repository: https://charts.jetstack.io
-    name: jetstack/cert-manager
+    name: cert-manager
     version: 1.2.0
   values:
     installCRDs: true
