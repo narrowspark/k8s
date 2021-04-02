@@ -1,7 +1,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: grafana
+  name: kiali
+  namespace: istio-system
 spec:
   interval: 30m
-  url: https://grafana.github.io/helm-charts
+  url: https://kiali.org/helm-charts

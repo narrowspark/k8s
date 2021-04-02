@@ -3,8 +3,6 @@ kind: Kustomization
 resources:
   - gotk-components.yaml
   - gotk-sync.yaml
-  - helm-exporter/helmrelease.yaml
-  - helm-repository/flagger.yaml
-  - helm-repository/grafana.yaml
-  - helm-repository/jetstack.yaml
-  - helm-repository/prometheus.yaml
+  - helm-exporter/helm-release.yaml
+  - helm-exporter/helm-repository.yaml
+

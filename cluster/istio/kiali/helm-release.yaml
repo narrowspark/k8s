@@ -15,7 +15,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: kiali
-        namespace: kiali-operator
+        namespace: istio-system
       interval: 5m
   values:
     cr:
