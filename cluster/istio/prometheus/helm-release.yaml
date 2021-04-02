@@ -17,7 +17,9 @@ spec:
         name: prometheus-community
         namespace: istio-system
       interval: 5m
-
+  values:
+    grafana:
+      enabled: false
 ---
 
 # Source: prometheus/templates/server/cm.yaml

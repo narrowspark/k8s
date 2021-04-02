@@ -9,7 +9,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://shanestarcher.com/helm-charts
+      # renovate: registryUrl=https://shanestarcher.com/helm-charts/
       chart: helm-exporter
       version: 0.6.2+5cbe2aa
       sourceRef:

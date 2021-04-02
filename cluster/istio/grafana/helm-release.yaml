@@ -4,51 +4,91 @@ metadata:
   name: grafana
   namespace: istio-system
 spec:
-  interval: 1m
+  interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://grafana.github.io/helm-charts
       chart: grafana
-      version: 6.7.1
+      version: 6.7.4
       sourceRef:
         kind: HelmRepository
         name: grafana
         namespace: istio-system
-      interval: 1m
+      interval: 5m
   values:
+    labels:
+      app: grafana
+    podLabels:
+      app: grafana
+    podAnnotations:
+      flux.weave.works/automated: "true"
+      sidecar.istio.io/inject: "false"
+    env:
+      GF_SECURITY_ADMIN_USER: prisis
+      GF_SECURITY_ADMIN_PASSWORD: test
+    service:
+      type: ClusterIP
+      port: 3000
+      portName: service
+      targetPort: 3000
+    # note: sidecar is not working in istio
     datasources:
-      apiVersion: 1
-      datasources:
-        - access: proxy
-          editable: true
-          isDefault: true
-          jsonData:
-            timeInterval: 5s
-          name: Prometheus
-          orgId: 1
-          type: prometheus
-          url: http://prometheus:9090
-    dashboardproviders:
-      apiVersion: 1
-      providers:
-        - disableDeletion: false
-          folder: istio
-          name: istio
-          options:
-            path: /var/lib/grafana/dashboards/istio
-          orgId: 1
-          type: file
-        - disableDeletion: false
-          folder: istio
-          name: istio-services
-          options:
-            path: /var/lib/grafana/dashboards/istio-services
-          orgId: 1
-          type: file
-    extraConfigmapMounts:
-      - name: config
-        configMap: grafana
-      - name: dashboards-istio
-        configMap: istio-grafana-dashboards
-      - name: dashboards-istio-services
-        configMap: istio-services-grafana-dashboards
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            access: proxy
+            editable: true
+            isDefault: true
+            jsonData:
+              timeInterval: 5s
+            orgId: 1
+            url: http://prometheus-kube-prometheus-prometheus.istio-system:9090
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - disableDeletion: false
+            folder: istio
+            name: dashboards-istio
+            options:
+              path: /var/lib/grafana/dashboards/dashboards-istio
+            orgId: 1
+            type: file
+          - disableDeletion: false
+            folder: istio
+            name: dashboards-istio-services
+            options:
+              path: /var/lib/grafana/dashboards/dashboards-istio-services
+            orgId: 1
+            type: file
+          - disableDeletion: false
+            folder: helm
+            name: dashboards-helm
+            options:
+              path: /var/lib/grafana/dashboards/dashboards-helm
+            orgId: 1
+            type: file
+          - disableDeletion: false
+            folder: flux
+            name: dashboards-flux
+            options:
+              path: /var/lib/grafana/dashboards/dashboards-flux
+            orgId: 1
+            type: file
+          - disableDeletion: false
+            folder: prometheus
+            name: dashboards-prometheus
+            options:
+              path: /var/lib/grafana/dashboards/dashboards-prometheus
+            orgId: 1
+            type: file
+    dashboardsConfigMaps:
+      dashboards-istio: istio-grafana-dashboards
+      dashboards-istio-services: istio-services-grafana-dashboards
+      dashboards-helm: helm-dashboards
+      dashboards-flux: flux-dashboards
+      dashboards-prometheus: prometheus-dashboards
+    plugins:
+      - grafana-worldmap-panel
