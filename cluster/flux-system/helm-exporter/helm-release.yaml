@@ -5,6 +5,8 @@ metadata:
   namespace: flux-system
   annotations:
     fluxcd.io/automated: "true"
+    meta.helm.sh/release-name: "helm-exporter"
+    meta.helm.sh/release-namespace: flux-system
 spec:
   interval: 5m
   chart:
@@ -20,5 +22,5 @@ spec:
   values:
     serviceMonitor:
       create: true
-      interval: 5m
+      interval: 1m
       namespace: istio-system
