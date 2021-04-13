@@ -11,9 +11,14 @@ spec:
     spec:
       # renovate: registryUrl=https://shanestarcher.com/helm-charts/
       chart: helm-exporter
-      version: 0.6.2+5cbe2aa
+      version: 0.7.3+0c5ff6f
       sourceRef:
         kind: HelmRepository
         name: shanestarcher
         namespace: flux-system
       interval: 5m
+  values:
+    serviceMonitor:
+      create: true
+      interval: 5m
+      namespace: istio-system
