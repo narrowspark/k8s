@@ -40,7 +40,7 @@ jobs:
           --set tag=${ISTIO_VER} \
           --set enableCRDTemplates=true \
           --set operatorNamespace=istio-operator \
-          --set istioNamespace=istio-system  > ./istio/operator/manifests.yaml
+          --set istioNamespace=istio-system  > ./cluster/istio/operator/manifests.yaml
 
           rm -rf ${ISTIO_DIR}
 

@@ -5,8 +5,8 @@ ignore: |
   .docker/
   vendor/
   node_modules/
-  flux-system/gotk-components.yaml
-  istio/operator/manifests.yaml
+  cluster/flux-system/gotk-components.yaml
+  cluster/istio/operator/manifests.yaml
 
 rules:
   braces:
